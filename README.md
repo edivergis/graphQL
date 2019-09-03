@@ -1,2 +1,2 @@
 # graphQL
-Estudos em cima do framework GraphQL
+Estudos em GraphQL
