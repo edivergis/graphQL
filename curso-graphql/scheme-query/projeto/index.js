@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server')
+const { importSchema } = require ('graphql-import')
 
 const usuarios = [{
     id: 1,
@@ -34,66 +35,7 @@ const perfis = [{
     nome:'Administrador'
 }]
 
-const typeDefs = gql`
-
-    scalar Date
-
-    type Usuario {
-        id: ID
-        nome: String!
-        email: String!
-        idade: Int
-        salario: Float
-        vip: Boolean
-        perfil: Perfil
-    }
-
-    type Produto {
-        nome: String!
-        preco: Float!
-        desconto: Float
-        precoComDesconto:Float
-    }
-
-    type Perfil {
-        id:Int!
-        nome: String!
-    }
-
-    #pontos de entrada da sua API!
-    type Query {
-        ola: String
-        horaAtual: Date
-        usuarioLogado: Usuario
-        produtoEmDestaque: Produto
-        numeroMegaSena:[Int]
-        usuarios:[Usuario]
-        usuario(id:ID): Usuario
-        perfis:[Perfil]
-        perfil(id:Int):Perfil
-    }
-    
-`
-
 const resolvers = {
-    Produto: {
-        precoComDesconto(produto){
-            if (produto.desconto) {
-                return produto.preco - (produto.preco * produto.desconto)
-            }
-            return produto.preco
-            
-        }
-    },
-    Usuario:{
-        salario(usuario) {
-            return usuario.salario_atual
-        },
-        perfil(usuario){
-            const sels = perfis.filter(p => p.id === usuario.perfil_id)
-            return sels ? sels[0] : null  
-        }
-    },
     Query: {
         produtoEmDestaque(){
             return {
@@ -138,13 +80,30 @@ const resolvers = {
             return perfis
         }
 
+    },
+    Produto: {
+        precoComDesconto(produto){
+            if (produto.desconto) {
+                return produto.preco - (produto.preco * produto.desconto)
+            }
+            return produto.preco
+            
+        }
+    },
+    Usuario:{
+        salario(usuario) {
+            return usuario.salario_atual
+        },
+        perfil(usuario){
+            const sels = perfis.filter(p => p.id === usuario.perfil_id)
+            return sels ? sels[0] : null  
+        }
     }
 
 }
 
 const server = new ApolloServer({
-
-    typeDefs,
+    typeDefs: importSchema ('./scheme/index.graphql'),
     resolvers
 
 })
