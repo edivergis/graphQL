@@ -1,26 +1,36 @@
+let id = 1
+function proximoId() {
+    return id++
+}
+
+const perfis = [
+    {id:1,nome:'Comum'},
+    {id:2,nome:'Administrador'}
+]
+
 const usuarios = [{
-    id: 1,
+    id: proximoId(),
     nome: 'Edi Vergis',
     email: 'evergis@zemail.com',
     idade: 35,
     perfil_id:1,
     status: 'ATIVO'
 },{
-    id: 2,
+    id: proximoId(),
     nome: 'Bruna Vergis',
     email: 'bvergis@zemail.com',
     idade: 27,
     perfil_id:1,
     status: 'ATIVO'
 },{
-    id: 3,
+    id: proximoId(),
     nome: 'Daniel Vergis',
     email: 'dvergis@zemail.com',
     idade: 3,
     perfil_id:2,
     status: 'INATIVO'
 },{
-    id: 4,
+    id: proximoId(),
     nome: 'Calebe Vergis',
     email: 'cvergis@zemail.com',
     idade: 2,
@@ -28,12 +38,4 @@ const usuarios = [{
     status: 'BLOQUEADO'
 }]
 
-const perfis = [{
-    id:1,
-    nome:'Comum'
-},{
-    id:2,
-    nome:'Administrador'
-}]
-
-module.exports = { usuarios, perfis }
+module.exports = { usuarios, perfis, proximoId }

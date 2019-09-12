@@ -1,0 +1,6 @@
+type Mutation {
+    #vírgula opcional
+    novoUsuario(nome: String,
+                email: String, 
+                idade: Int): Usuario!
+}
